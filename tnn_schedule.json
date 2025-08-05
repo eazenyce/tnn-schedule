@@ -1,0 +1,26 @@
+[
+  {
+    "Day ":"Monday",
+    "Time":"7:00a",
+    "Show Title":"Blackout Time",
+    "Host":"Killa Eaze",
+    "Genre":"History",
+    "Duration (min)":180
+  },
+  {
+    "Day ":"Monday",
+    "Time":"3:00p",
+    "Show Title":"Roots Reggae",
+    "Host":"Eddie Rankin",
+    "Genre":"Reggae",
+    "Duration (min)":180
+  },
+  {
+    "Day ":"Sunday",
+    "Time":"9:00a",
+    "Show Title":"Sunday Soul",
+    "Host":"E.R.",
+    "Genre":"R&B",
+    "Duration (min)":180
+  }
+]
