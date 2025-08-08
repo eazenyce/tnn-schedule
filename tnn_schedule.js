@@ -62,8 +62,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Highlight if "Now Playing"
                 if (day === currentDay && currentTime >= startMinutes && currentTime < endMinutes) {
-                    block.style.border = "2px solid #ff0";
-                    block.style.backgroundColor = "#444";
+    block.classList.add("now-playing");
+}
+
                 }
 
                 block.innerHTML = `
