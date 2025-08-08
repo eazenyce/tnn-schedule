@@ -41,3 +41,16 @@
   font-size: 0.9rem;
   color: #ccc;
 }
+.day-group {
+  margin-bottom: 2rem;
+}
+
+.day-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #9b59b6;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
