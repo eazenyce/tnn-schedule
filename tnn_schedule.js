@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", async () => {
     const logoUrl = "https://i.imgur.com/iEBHPPC.png"; // TNN Logo
     const scheduleUrl = "https://eazenyce.github.io/tnn-schedule/schedule.json";
@@ -39,6 +40,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const grid = document.createElement("div");
         grid.classList.add("schedule-grid");
 
+        let todaySection = null; // store today's section
+
         daysOrder.forEach(day => {
             if (showsByDay[day].length === 0) return;
 
@@ -46,7 +49,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             const dayTitle = document.createElement("h3");
             dayTitle.textContent = day;
             dayTitle.style.textAlign = "center";
+            dayTitle.id = `day-${day}`; // for scrolling
             grid.appendChild(dayTitle);
+
+            if (day === currentDay) {
+                todaySection = dayTitle;
+            }
 
             showsByDay[day].forEach(show => {
                 const timeParts = show.Time.toLowerCase().includes("p") || show.Time.toLowerCase().includes("a")
@@ -77,6 +85,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         container.appendChild(grid);
+
+        // Auto-scroll to today
+        if (todaySection) {
+            setTimeout(() => {
+                todaySection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 300);
+        }
 
     } catch (error) {
         console.error("Error loading schedule:", error);
