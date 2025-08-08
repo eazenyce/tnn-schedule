@@ -1,0 +1,43 @@
+#tnn-schedule {
+  font-family: 'Helvetica Neue', sans-serif;
+  color: #fff;
+  padding: 2rem;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 20px 5px #9b59b6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tnn-schedule-box {
+  text-align: center;
+}
+
+.schedule-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.show-block {
+  background: #2c2c2c;
+  border: 1px solid #9b59b6;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.show-time {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.show-title {
+  font-size: 1.2rem;
+  margin-top: 0.25rem;
+}
+
+.show-host,
+.show-genre {
+  font-size: 0.9rem;
+  color: #ccc;
+}
