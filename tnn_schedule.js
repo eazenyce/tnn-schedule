@@ -15,10 +15,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         const scheduleData = await response.json();
 
         // Create header with logo
-        const header = document.createElement("div");
-        header.classList.add("tnn-schedule-box");
-        header.innerHTML = `<img src="${https://i.imgur.com/iEBHPPC.png}" alt="TNN Logo" style="max-width:150px;">`;
-        container.appendChild(header);
+        const logoUrl = "https://i.imgur.com/iEBHPPC.png"; // set the actual image URL here
+
+// Create header with logo
+const header = document.createElement("div");
+header.classList.add("tnn-schedule-box");
+header.innerHTML = `<img src="${logoUrl}" alt="TNN Logo" style="max-width:150px;">`;
+container.appendChild(header);
+
 
         // Group shows by day
         const daysOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
