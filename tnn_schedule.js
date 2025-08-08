@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const logoUrl = "https://eazegetsbusy.com/path-to-your-logo.png"; // <-- Replace with your real logo path
+    const logoUrl = "https://i.imgur.com/iEBHPPC.png"; // TNN Logo
     const scheduleUrl = "https://eazenyce.github.io/tnn-schedule/schedule.json";
 
     const container = document.getElementById("tnn-schedule");
@@ -15,14 +15,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         const scheduleData = await response.json();
 
         // Create header with logo
-        const logoUrl = "https://i.imgur.com/iEBHPPC.png"; // set the actual image URL here
-
-// Create header with logo
-const header = document.createElement("div");
-header.classList.add("tnn-schedule-box");
-header.innerHTML = `<img src="${logoUrl}" alt="TNN Logo" style="max-width:150px;">`;
-container.appendChild(header);
-
+        const header = document.createElement("div");
+        header.classList.add("tnn-schedule-box");
+        header.innerHTML = `<img src="${logoUrl}" alt="TNN Logo" style="max-width:150px;">`;
+        container.appendChild(header);
 
         // Group shows by day
         const daysOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -66,9 +62,7 @@ container.appendChild(header);
 
                 // Highlight if "Now Playing"
                 if (day === currentDay && currentTime >= startMinutes && currentTime < endMinutes) {
-    block.classList.add("now-playing");
-}
-
+                    block.classList.add("now-playing");
                 }
 
                 block.innerHTML = `
