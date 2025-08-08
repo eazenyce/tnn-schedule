@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   scheduleBox.className = "tnn-schedule-box";
 
   const logo = document.createElement("img");
-  logo.src = "https://i.imgur.com/iEBHPPC.png"; // Replace if you host your own logo
+  logo.src = "https://i.imgur.com/iEBHPPC.png"; 
   logo.alt = "TNN Logo";
   logo.style.maxWidth = "200px";
   logo.style.display = "block";
