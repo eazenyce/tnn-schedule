@@ -1,57 +1,53 @@
-
 document.addEventListener("DOMContentLoaded", async () => {
-    // ✅ Set your real logo URL here
     const logoUrl = "https://i.imgur.com/iEBHPPC.png";
-
-    // ✅ URL to your schedule JSON
     const scheduleUrl = "https://eazenyce.github.io/tnn-schedule/schedule.json";
 
-    // ✅ Make sure the container exists
     const container = document.getElementById("tnn-schedule");
-    if (!container) {
-        console.error("❌ No #tnn-schedule container found in HTML. Add: <div id='tnn-schedule'></div>");
-        return;
-    }
+    if (!container) return console.error("No #tnn-schedule container found on page.");
 
     try {
-        // Fetch schedule JSON
         const response = await fetch(scheduleUrl);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const scheduleData = await response.json();
 
-        // Create header with logo
+        // Header
         const header = document.createElement("div");
         header.classList.add("tnn-schedule-box");
         header.innerHTML = `<img src="${logoUrl}" alt="TNN Logo" style="max-width:150px;">`;
         container.appendChild(header);
 
+        // Now Playing Panel
+        const nowPlayingPanel = document.createElement("div");
+        nowPlayingPanel.classList.add("now-playing-panel");
+        nowPlayingPanel.style.display = "none"; 
+        container.appendChild(nowPlayingPanel);
+
         // Group shows by day
-        const daysOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const daysOrder = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const showsByDay = {};
         daysOrder.forEach(day => showsByDay[day] = []);
-
         scheduleData.forEach(show => {
-            const day = show["Day "]?.trim();
+            const day = show["Day "].trim();
             if (showsByDay[day]) showsByDay[day].push(show);
         });
 
-        // Get current day/time
         const now = new Date();
         const currentDay = daysOrder[now.getDay()];
         const currentTime = now.getHours() * 60 + now.getMinutes();
 
-        // Create schedule grid
+        // Build schedule
         const grid = document.createElement("div");
         grid.classList.add("schedule-grid");
 
-        daysOrder.forEach(day => {
-            if (showsByDay[day].length === 0) return;
+        let todayElement = null;
 
-            // Day title
+        daysOrder.forEach(day => {
+            if (!showsByDay[day].length) return;
+
             const dayTitle = document.createElement("h3");
             dayTitle.textContent = day;
-            dayTitle.style.textAlign = "center";
             grid.appendChild(dayTitle);
+            if (day === currentDay) todayElement = dayTitle;
 
             showsByDay[day].forEach(show => {
                 const timeParts = show.Time.toLowerCase().includes("p") || show.Time.toLowerCase().includes("a")
@@ -61,13 +57,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const startMinutes = timeParts.hours * 60 + timeParts.minutes;
                 const endMinutes = startMinutes + (parseInt(show["Duration (min)"]) || 60);
 
-                // Create block
                 const block = document.createElement("div");
                 block.classList.add("show-block");
+                block.title = show.Description || "No description available.";
 
-                // Highlight if "Now Playing"
+                // Highlight Now Playing
                 if (day === currentDay && currentTime >= startMinutes && currentTime < endMinutes) {
                     block.classList.add("now-playing");
+                    nowPlayingPanel.innerHTML = `Now Playing: ${show["Show Title"]} — ${show.Host}`;
+                    nowPlayingPanel.style.display = "block";
                 }
 
                 block.innerHTML = `
@@ -82,6 +80,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         container.appendChild(grid);
+
+        // Auto-scroll to today
+        if (todayElement) {
+            setTimeout(() => {
+                todayElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 300);
+        }
 
     } catch (error) {
         console.error("Error loading schedule:", error);
