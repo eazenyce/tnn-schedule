@@ -58,6 +58,46 @@ h3 {
   font-size: 0.9rem;
   color: #ccc;
 }
+/* Tooltip styling */
+.tooltip {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(155, 89, 182, 0.95);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  white-space: normal;
+  max-width: 250px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.show-block {
+  position: relative; /* Required for tooltip positioning */
+}
+
+.show-block:hover .tooltip {
+  opacity: 1;
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(155, 89, 182, 0.95) transparent transparent transparent;
+}
 
 /* Now Playing Highlight */
 .now-playing {
