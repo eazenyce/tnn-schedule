@@ -11,6 +11,7 @@
 
 .tnn-schedule-box {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .schedule-grid {
@@ -19,11 +20,27 @@
   gap: 1rem;
 }
 
+h3 {
+  background-color: #9b59b6;
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
 .show-block {
   background: #2c2c2c;
   border: 1px solid #9b59b6;
   border-radius: 8px;
   padding: 1rem;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.show-block:hover {
+  background-color: #3c3c3c;
+  transform: scale(1.02);
+  cursor: pointer;
 }
 
 .show-time {
@@ -41,16 +58,22 @@
   font-size: 0.9rem;
   color: #ccc;
 }
-.day-group {
-  margin-bottom: 2rem;
+
+/* Now Playing Highlight */
+.now-playing {
+  background-color: #fffae6;
+  border: 2px solid #ff9800;
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.7);
 }
 
-.day-header {
-  font-size: 1.5rem;
+/* Now Playing Panel */
+.now-playing-panel {
+  background: linear-gradient(to right, #ff9800, #ff5722);
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
   font-weight: bold;
-  color: #9b59b6;
-  margin-bottom: 1rem;
+  border-radius: 6px;
+  margin-bottom: 15px;
   text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
