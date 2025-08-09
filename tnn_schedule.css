@@ -1,119 +1,71 @@
-#tnn-schedule {
-  font-family: 'Helvetica Neue', sans-serif;
-  color: #fff;
-  padding: 2rem;
-  background-color: #1e1e1e;
-  border-radius: 12px;
-  box-shadow: 0 0 20px 5px #9b59b6;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.tnn-schedule-box {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
+/* Schedule Grid */
 .schedule-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-h3 {
-  background-color: #9b59b6;
-  padding: 8px;
-  border-radius: 4px;
-  text-align: center;
-  margin: 0;
-  font-size: 1.2rem;
-}
-
+/* Show Block */
 .show-block {
-  background: #2c2c2c;
-  border: 1px solid #9b59b6;
-  border-radius: 8px;
-  padding: 1rem;
-  transition: background-color 0.3s, transform 0.2s;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    position: relative;
 }
 
 .show-block:hover {
-  background-color: #3c3c3c;
-  transform: scale(1.02);
-  cursor: pointer;
+    background-color: #f0f8ff;
+    cursor: pointer;
 }
 
-.show-time {
-  font-weight: bold;
-  font-size: 1.1rem;
+/* Tooltip */
+.show-block::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    background: #333;
+    color: #fff;
+    padding: 6px;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    width: 250px;
+    font-size: 0.85rem;
+    z-index: 10;
 }
 
-.show-title {
-  font-size: 1.2rem;
-  margin-top: 0.25rem;
-}
-
-.show-host,
-.show-genre {
-  font-size: 0.9rem;
-  color: #ccc;
-}
-/* Tooltip styling */
-.tooltip {
-  position: absolute;
-  bottom: 110%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(155, 89, 182, 0.95);
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  white-space: normal;
-  max-width: 250px;
-  text-align: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 10;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-.show-block {
-  position: relative; /* Required for tooltip positioning */
-}
-
-.show-block:hover .tooltip {
-  opacity: 1;
-}
-
-/* Tooltip arrow */
-.tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: rgba(155, 89, 182, 0.95) transparent transparent transparent;
+.show-block:hover::after {
+    opacity: 1;
+    transform: translateY(-10px);
 }
 
 /* Now Playing Highlight */
 .now-playing {
-  background-color: #fffae6;
-  border: 2px solid #ff9800;
-  box-shadow: 0 0 10px rgba(255, 152, 0, 0.7);
+    background-color: #fffae6;
+    border: 2px solid #ff9800;
+    box-shadow: 0 0 10px rgba(255, 152, 0, 0.7);
+}
+
+/* Tooltip for Now Playing */
+.now-playing:hover::after {
+    background: gold;
+    color: #000;
 }
 
 /* Now Playing Panel */
 .now-playing-panel {
-  background: linear-gradient(to right, #ff9800, #ff5722);
-  color: white;
-  padding: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  text-align: center;
+    background: linear-gradient(to right, #ff9800, #ff5722);
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
 }
