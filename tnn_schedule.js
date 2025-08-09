@@ -1,3 +1,5 @@
+<div id="tnn-schedule"></div> <!-- Must exist before script runs -->
+<script src="index.js"></script> <!-- Or whatever your JS filename is -->
 document.addEventListener("DOMContentLoaded", async () => {
     // ✅ Set your real logo URL here
     const logoUrl = "https://i.imgur.com/iEBHPPC.png";
