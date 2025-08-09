@@ -1,11 +1,14 @@
-
 document.addEventListener("DOMContentLoaded", async () => {
-    const logoUrl = "https://i.imgur.com/iEBHPPC.png"; // TNN Logo
+    // ✅ Set your real logo URL here
+    const logoUrl = "https://i.imgur.com/iEBHPPC.png";
+
+    // ✅ URL to your schedule JSON
     const scheduleUrl = "https://eazenyce.github.io/tnn-schedule/schedule.json";
 
+    // ✅ Make sure the container exists
     const container = document.getElementById("tnn-schedule");
     if (!container) {
-        console.error("No #tnn-schedule container found on page.");
+        console.error("❌ No #tnn-schedule container found in HTML. Add: <div id='tnn-schedule'></div>");
         return;
     }
 
@@ -27,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         daysOrder.forEach(day => showsByDay[day] = []);
 
         scheduleData.forEach(show => {
-            const day = show["Day "].trim();
+            const day = show["Day "]?.trim();
             if (showsByDay[day]) showsByDay[day].push(show);
         });
 
@@ -40,8 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const grid = document.createElement("div");
         grid.classList.add("schedule-grid");
 
-        let todaySection = null; // store today's section
-
         daysOrder.forEach(day => {
             if (showsByDay[day].length === 0) return;
 
@@ -49,12 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const dayTitle = document.createElement("h3");
             dayTitle.textContent = day;
             dayTitle.style.textAlign = "center";
-            dayTitle.id = `day-${day}`; // for scrolling
             grid.appendChild(dayTitle);
-
-            if (day === currentDay) {
-                todaySection = dayTitle;
-            }
 
             showsByDay[day].forEach(show => {
                 const timeParts = show.Time.toLowerCase().includes("p") || show.Time.toLowerCase().includes("a")
@@ -85,13 +81,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         container.appendChild(grid);
-
-        // Auto-scroll to today
-        if (todaySection) {
-            setTimeout(() => {
-                todaySection.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 300);
-        }
 
     } catch (error) {
         console.error("Error loading schedule:", error);
