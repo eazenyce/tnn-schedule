@@ -1,75 +1,75 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const logoUrl = "https://i.imgur.com/iEBHPPC.png";
+    const logoUrl = "https://i.imgur.com/iEBHPPC.png"; // TNN Logo
     const scheduleUrl = "https://eazenyce.github.io/tnn-schedule/schedule.json";
 
     const container = document.getElementById("tnn-schedule");
-    if (!container) return console.error("No #tnn-schedule container found on page.");
+    if (!container) {
+        console.error("No #tnn-schedule container found on page.");
+        return;
+    }
 
     try {
+        // Fetch schedule JSON
         const response = await fetch(scheduleUrl);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const scheduleData = await response.json();
 
-        // Header
+        // Create header with logo
         const header = document.createElement("div");
         header.classList.add("tnn-schedule-box");
         header.innerHTML = `<img src="${logoUrl}" alt="TNN Logo" style="max-width:150px;">`;
         container.appendChild(header);
 
-        // Now Playing Panel
-        const nowPlayingPanel = document.createElement("div");
-        nowPlayingPanel.classList.add("now-playing-panel");
-        nowPlayingPanel.style.display = "none"; 
-        container.appendChild(nowPlayingPanel);
-
-        // Group shows by day
-        const daysOrder = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        // Days order
+        const daysOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const showsByDay = {};
         daysOrder.forEach(day => showsByDay[day] = []);
+
+        // Group shows by day
         scheduleData.forEach(show => {
-            const day = show["Day "].trim();
+            const day = show["Day"].trim();
             if (showsByDay[day]) showsByDay[day].push(show);
         });
 
+        // Current time for "Now Playing"
         const now = new Date();
         const currentDay = daysOrder[now.getDay()];
         const currentTime = now.getHours() * 60 + now.getMinutes();
 
-        // Build schedule
+        let nowPlayingShow = null;
+
+        // Create schedule grid
         const grid = document.createElement("div");
         grid.classList.add("schedule-grid");
 
-        let todayElement = null;
-
         daysOrder.forEach(day => {
-            if (!showsByDay[day].length) return;
+            if (showsByDay[day].length === 0) return;
 
+            // Day title
             const dayTitle = document.createElement("h3");
             dayTitle.textContent = day;
+            dayTitle.style.textAlign = "center";
             grid.appendChild(dayTitle);
-            if (day === currentDay) todayElement = dayTitle;
 
             showsByDay[day].forEach(show => {
-               // Inside the showsByDay[day].forEach(show => { ... }) loop
-const block = document.createElement("div");
-block.classList.add("show-block");
+                const timeParts = show.Time.toLowerCase().includes("p") || show.Time.toLowerCase().includes("a")
+                    ? parseTime12(show.Time)
+                    : parseTime24(show.Time);
 
-// Remove title attribute & use custom tooltip
-const tooltipText = show.Description || "No description available.";
-block.innerHTML = `
-    <div class="show-time">${show.Time}</div>
-    <div class="show-title">${show["Show Title"]}</div>
-    <div class="show-host">Host: ${show.Host}</div>
-    <div class="show-genre">Genre: ${show.Genre}</div>
-    <div class="tooltip">${tooltipText}</div>
-`;
+                const startMinutes = timeParts.hours * 60 + timeParts.minutes;
+                const endMinutes = startMinutes + (parseInt(show["Duration (min)"]) || 60);
 
+                // Create block
+                const block = document.createElement("div");
+                block.classList.add("show-block");
 
-                // Highlight Now Playing
+                // Tooltip
+                block.setAttribute("data-tooltip", show.Description || "No description available.");
+
+                // Highlight if "Now Playing"
                 if (day === currentDay && currentTime >= startMinutes && currentTime < endMinutes) {
                     block.classList.add("now-playing");
-                    nowPlayingPanel.innerHTML = `Now Playing: ${show["Show Title"]} — ${show.Host}`;
-                    nowPlayingPanel.style.display = "block";
+                    nowPlayingShow = show;
                 }
 
                 block.innerHTML = `
@@ -83,14 +83,15 @@ block.innerHTML = `
             });
         });
 
-        container.appendChild(grid);
-
-        // Auto-scroll to today
-        if (todayElement) {
-            setTimeout(() => {
-                todayElement.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 300);
+        // Add Now Playing panel at top
+        if (nowPlayingShow) {
+            const nowPlayingPanel = document.createElement("div");
+            nowPlayingPanel.classList.add("now-playing-panel");
+            nowPlayingPanel.textContent = `Now Playing: ${nowPlayingShow["Show Title"]} — ${nowPlayingShow.Host}`;
+            container.appendChild(nowPlayingPanel);
         }
+
+        container.appendChild(grid);
 
     } catch (error) {
         console.error("Error loading schedule:", error);
