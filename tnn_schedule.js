@@ -50,16 +50,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (day === currentDay) todayElement = dayTitle;
 
             showsByDay[day].forEach(show => {
-                const timeParts = show.Time.toLowerCase().includes("p") || show.Time.toLowerCase().includes("a")
-                    ? parseTime12(show.Time)
-                    : parseTime24(show.Time);
+               // Inside the showsByDay[day].forEach(show => { ... }) loop
+const block = document.createElement("div");
+block.classList.add("show-block");
 
-                const startMinutes = timeParts.hours * 60 + timeParts.minutes;
-                const endMinutes = startMinutes + (parseInt(show["Duration (min)"]) || 60);
+// Remove title attribute & use custom tooltip
+const tooltipText = show.Description || "No description available.";
+block.innerHTML = `
+    <div class="show-time">${show.Time}</div>
+    <div class="show-title">${show["Show Title"]}</div>
+    <div class="show-host">Host: ${show.Host}</div>
+    <div class="show-genre">Genre: ${show.Genre}</div>
+    <div class="tooltip">${tooltipText}</div>
+`;
 
-                const block = document.createElement("div");
-                block.classList.add("show-block");
-                block.title = show.Description || "No description available.";
 
                 // Highlight Now Playing
                 if (day === currentDay && currentTime >= startMinutes && currentTime < endMinutes) {
